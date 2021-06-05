@@ -1,10 +1,14 @@
 {
   "name": "vue-zxingjs",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build"
+  },
+  "repository":{
+    "type":"git",
+    "url":"https://github.com/WAGFS/vue-zxingjs"
   },
   "dependencies": {
     "@zxing/library": "^0.18.6",
