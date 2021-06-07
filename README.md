@@ -114,7 +114,7 @@ export default {
 
 ### `success`:Function(codeText)
 
-解析成功后的回调，`codeText`为解析后的结果字符，默认会当作success回调的第一个参数传递进去。
+解析成功后的回调，`codeText`为解析后的结果字符，默认会当作success回调的第一个参数传递进去，并使用alert将成功结果弹出。
 
 
 
@@ -122,9 +122,15 @@ export default {
 
 ### `fail`:Function(error)
 
-解析失败后的回调，`error`为解析失败后的错误对象，默认会当作fail回调的第一个参数传递进去。
+解析失败后的回调，`error`为解析失败后的错误对象，默认会当作fail回调的第一个参数传递进去，并使用alert将失败原因弹出。
 
 
+
+
+
+### `getVideoFail`:Function(error)
+
+调取用户摄像头失败后的回调，`error`为解析失败后的错误对象，默认会当作getVideoFail回调的第一个参数传递进去，并使用alert将失败原因弹出。
 
 
 

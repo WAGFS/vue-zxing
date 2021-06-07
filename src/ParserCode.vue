@@ -80,12 +80,23 @@ export default {
     },
     success: {
       type: Function,
-      default() {},
+      default(result) {
+        alert(result)
+      },
     },
     fail: {
       type: Function,
-      default() {},
+      default(err) {
+        alert(err)
+      },
     },
+    // 获取摄像头失败回调
+    getVideoFail:{
+      type: Function,
+      default(err) {
+        alert(err)
+      }
+    }
   },
   data() {
     return {
@@ -147,7 +158,7 @@ export default {
         })
         .catch((err) => {
           this.tipShow = false;
-          console.error(err);
+          this.getVideoFail(err)
         });
     },
     decodeFromInputVideoFunc(firstDeviceId) {
@@ -160,14 +171,12 @@ export default {
           if (result) {
             if (result.text) {
               this.tipShow = true;
-              alert(result.text);
               this.success(result.text);
             }
           }
           if (err && !err) {
             this.tipMsg = "识别失败";
             this.fail(err);
-            console.error(err);
           }
         }
       );
@@ -178,7 +187,6 @@ export default {
       let res = this.codeReader
         .decodeFromImage(undefined, imgSrc)
         .then((result) => {
-          console.log(result.text);
           this.success(result.text);
           return result.text;
         })
@@ -215,8 +223,10 @@ body {
 }
 /*vjs-fluid 自适video 长宽*/
 .video {
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
+  /* 打破video宽高比，填充满父级 */
+  object-fit: fill;
 }
 .tip {
   position: absolute;
@@ -238,8 +248,9 @@ body {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  height: 20%;
-  width: 70%;
+  /* 扫描框变大，相机离太远不易得出结果，所以选择放大扫描框 */
+  height: 30%;
+  width: 85%;
 }
 .frame {
   position: absolute;
@@ -289,14 +300,15 @@ body {
     transparent 100%
   );
   transform: translateY(-3px);
-  animation: move 2s linear infinite;
+  animation: move 3.5s linear infinite;
 }
 @keyframes move {
   0% {
     transform: translateY(-3px);
   }
   100% {
-    transform: translateY(calc(20vh - 3px));
+    /* scanBox变高扫描线运动范围增大 */
+    transform: translateY(calc(30vh - 3px));
   }
 }
 </style>
