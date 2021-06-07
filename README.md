@@ -52,39 +52,91 @@ export default {
 
 ` parseType:'Camera' | 'Image' `
 
+
+
+
+
 ### `inputId`:String
 
 如果选择使用静态文件📕模式，那么可以传入一个input的id，这个input类型需要是file类型，如果不传入id则采用组件默认的input。
+
+
+
+
 
 ### `showDefaultInput`:Boolean
 
 如果不想要默认的input框展示可以传入`showDefaultInput`,然后通过组件下的`parseStaticImg`方法传入图片路径来获取解析后的值。
 
+
+
+
+
 ### `showScanBox`:Boolean
 
 在相机📷模式下，默认会展示一个扫描框（条形码），和提示文字，如果不需要的话，可以传入`showScanBox:false`。
+
+
+
+
 
 ### `videoWidth`:Number
 
 设置相机的宽度，默认为100vw。
 
+
+
+
+
 ### `videoHeight`:Number
 
 设置相机高度，默认为100vh。
+
+
+
+
+
+### `scanBoxWidth`:Number
+
+设置扫描框宽度，默认为70%。
+
+
+
+
+
+### `scanBoxWidth`:Number
+
+设置扫描框高度，默认为20%。
+
+
+
+
 
 ### `success`:Function(codeText)
 
 解析成功后的回调，`codeText`为解析后的结果字符，默认会当作success回调的第一个参数传递进去。
 
+
+
+
+
 ### `fail`:Function(error)
 
 解析失败后的回调，`error`为解析失败后的错误对象，默认会当作fail回调的第一个参数传递进去。
+
+
+
+
 
 ## slot
 
 ### #default
 
 组件内设有默认插槽，当模式为相机📷模式时，默认会有一个扫描框和提示文字，可查看 上文showScanBox属性。
+
+
+
+
 
 ### #other
 

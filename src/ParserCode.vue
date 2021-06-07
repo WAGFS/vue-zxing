@@ -17,7 +17,7 @@
       v-if="parseType === 'Image' && inputId === 'choose' && showDefaultInput"
     />
     <slot>
-      <div class="scanBox" v-if="parseType === 'Camera' && showScanBox">
+      <div class="scanBox" :style="{width:scanBoxWidth,height:scanHeight}" v-if="parseType === 'Camera' && showScanBox">
         <div class="frame upperLeft"></div>
         <div class="frame upperRight"></div>
         <div class="frame lowerRight"></div>
@@ -67,6 +67,14 @@ export default {
       default: null,
     },
     videoHeight: {
+      typeof: Number,
+      default: null,
+    },
+    scanBoxWidth:{
+      typeof: Number,
+      default: null,
+    },
+    scanHeight:{
       typeof: Number,
       default: null,
     },
