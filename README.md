@@ -4,7 +4,8 @@
 
 **注意：**
 
-* **请尽可能的在https域名下调用组件，在http域名下可能导致相机唤醒失败。**
+* **请尽可能的在https域名下调用组件，在http域名下只能是localhost或者是127.0.0.1，其他域名会导致相机唤醒失败。**
+* **请在可调取摄像头的设备上使用组件。**
 
 [zxing-js/library](https://serratus.github.io/zxing-js/library/) 's wrapper for Vue.js
 

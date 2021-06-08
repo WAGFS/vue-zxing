@@ -60,7 +60,7 @@ export default {
     },
     showScanBox: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     videoWidth: {
       typeof: Number,
@@ -138,6 +138,7 @@ export default {
         .getVideoInputDevices()
         .then((videoInputDevices) => {
           // videoInputDevices 是一个设备(摄像头，[前置，后置])列表
+          this.showScanBox = true
           this.tipShow = true;
           this.tipMsg = "扫描装备条码";
           // 默认获取第一个摄像头设备id
@@ -157,8 +158,9 @@ export default {
           this.decodeFromInputVideoFunc(firstDeviceId);
         })
         .catch((err) => {
+          this.showScanBox = false
           this.tipShow = false;
-          this.getVideoFail(err)
+          this.getVideoFail(err) || alert("调取摄像头失败")
         });
     },
     decodeFromInputVideoFunc(firstDeviceId) {
