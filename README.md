@@ -79,6 +79,10 @@ export default {
 
 
 
+### `showToggleBtn`:Boolean
+
+是否展示切换镜头图标，用于切换前置摄像头和后置摄像头。
+
 
 
 ### `videoWidth`:Number
@@ -149,3 +153,10 @@ export default {
 
 用户可以通过使用other插槽来添加自己想要的一些ui。
 
+
+
+
+
+### #header
+
+头部工具栏，默认具有切换镜头工具和刷新工具（有些机型切换到后台再返回页面视频流会卡住）。切换镜头可调用组件下的`decodeOnceFromConstraintsFunc`方法，必须传入一个参数指定切换前置（`{ video: { facingMode: "user" } }`）还是后置（`{ video: { facingMode: { exact: "environment" } } }`）。刷新视频也可调用该方法。

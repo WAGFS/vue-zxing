@@ -1,5 +1,19 @@
 <template>
   <div>
+    <slot name="header">
+      <header>
+        <div class="refresh" @click="decodeOnceFromConstraintsFunc(switchPerspective)" v-if="showToggleBtnCopy">
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-shuaxin"></use>
+          </svg>
+        </div>
+        <div class="toggle" @click="toggle" v-if="showToggleBtnCopy">
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-iconqiehuanjingtou"></use>
+          </svg>
+        </div>
+      </header>
+    </slot>
     <div class="page" v-if="parseType === 'Camera'">
       <video
         id="video"
@@ -17,7 +31,11 @@
       v-if="parseType === 'Image' && inputId === 'choose' && showDefaultInput"
     />
     <slot>
-      <div class="scanBox" :style="{width:scanBoxWidth,height:scanHeight}" v-if="parseType === 'Camera' && showScanBox">
+      <div
+        class="scanBox"
+        :style="{ width: scanBoxWidth, height: scanHeight }"
+        v-if="parseType === 'Camera' && showScanBoxCopy"
+      >
         <div class="frame upperLeft"></div>
         <div class="frame upperRight"></div>
         <div class="frame lowerRight"></div>
@@ -32,6 +50,7 @@
   </div>
 </template>
 <script>
+import "./assets/svg/iconfont";
 import { BrowserMultiFormatReader } from "@zxing/library";
 export default {
   name: "parser-code",
@@ -62,6 +81,11 @@ export default {
       type: Boolean,
       default: false,
     },
+    // 是否展示切换镜头按钮
+    showToggleBtn: {
+      type: Boolean,
+      default: false,
+    },
     videoWidth: {
       typeof: Number,
       default: null,
@@ -70,33 +94,33 @@ export default {
       typeof: Number,
       default: null,
     },
-    scanBoxWidth:{
+    scanBoxWidth: {
       typeof: Number,
       default: null,
     },
-    scanHeight:{
+    scanHeight: {
       typeof: Number,
       default: null,
     },
     success: {
       type: Function,
       default(result) {
-        alert(result)
+        alert(result);
       },
     },
     fail: {
       type: Function,
       default(err) {
-        alert(err)
+        alert(err);
       },
     },
     // 获取摄像头失败回调
-    getVideoFail:{
+    getVideoFail: {
       type: Function,
       default(err) {
-        alert(err)
-      }
-    }
+        alert(err);
+      },
+    },
   },
   data() {
     return {
@@ -105,14 +129,24 @@ export default {
       tipShow: true,
       img: null,
       reader: null,
+      back: true,
+      showScanBoxCopy: this.showScanBox,
+      showToggleBtnCopy: this.showToggleBtn,
       inputDom: null,
     };
+  },
+  computed: {
+    switchPerspective() {
+      return this.back
+        ? { video: { facingMode: { exact: "environment" } } }
+        : { video: { facingMode: "user" } };
+    },
   },
   created() {
     if (this.parseType === "Camera") {
       this.openScan();
     } else {
-      this.reader = new FileReader()
+      this.reader = new FileReader();
       let _this = this;
       this.reader.onload = function(e) {
         if (!e.target.result)
@@ -123,13 +157,13 @@ export default {
   },
   mounted() {
     // 防止获取不到父组件中的元素
-   if(this.parseType === "Image"){
+    if (this.parseType === "Image") {
       this.$nextTick(() => {
-      this.inputDom = document.querySelector(`#${this.inputId}`);
-      this.inputDom &&
-        this.inputDom.addEventListener("change", this.selectImg(this), false);
-    });
-   }
+        this.inputDom = document.querySelector(`#${this.inputId}`);
+        this.inputDom &&
+          this.inputDom.addEventListener("change", this.selectImg(this), false);
+      });
+    }
   },
   methods: {
     async openScan() {
@@ -138,35 +172,30 @@ export default {
         .getVideoInputDevices()
         .then((videoInputDevices) => {
           // videoInputDevices 是一个设备(摄像头，[前置，后置])列表
-          this.showScanBox = true
-          this.tipShow = true;
-          this.tipMsg = "扫描装备条码";
-          // 默认获取第一个摄像头设备id
-          let firstDeviceId = videoInputDevices[0].deviceId;
-          // 获取第一个摄像头设备的名称
-          const videoInputDeviceslablestr = JSON.stringify(
-            videoInputDevices[0].label
-          );
           if (videoInputDevices.length > 1) {
-            // 判断是否后置摄像头
-            if (videoInputDeviceslablestr.indexOf("back") > -1) {
-              firstDeviceId = videoInputDevices[0].deviceId;
-            } else {
-              firstDeviceId = videoInputDevices[1].deviceId;
-            }
+            this.showScanBoxCopy = true;
+            this.tipShow = true;
+            this.showToggleBtnCopy = true;
+            this.tipMsg = "扫描装备条码";
+            this.decodeOnceFromConstraintsFunc(this.switchPerspective);
+          } else {
+            return alert("请允许获取摄像头权限后再进行二维码扫描");
           }
-          this.decodeFromInputVideoFunc(firstDeviceId);
         })
         .catch((err) => {
-          this.showScanBox = false
+          this.showScanBoxCopy = false;
           this.tipShow = false;
-          this.getVideoFail(err) || alert("调取摄像头失败")
+          this.getVideoFail(err);
         });
     },
-    decodeFromInputVideoFunc(firstDeviceId) {
+    toggle() {
+      this.back = !this.back;
+      this.decodeOnceFromConstraintsFunc(this.switchPerspective);
+    },
+    decodeOnceFromConstraintsFunc(constraints) {
       this.codeReader.reset(); // 重置
-      this.codeReader.decodeFromInputVideoDeviceContinuously(
-        firstDeviceId,
+      this.codeReader.decodeOnceFromConstraints(
+        constraints,
         "video",
         (result, err) => {
           this.tipMsg = "正在尝试识别...";
@@ -222,6 +251,28 @@ export default {
 <style>
 body {
   margin: 0;
+}
+/* 头部 */
+header {
+  position: fixed;
+  top: 2%;
+  left: 0;
+  right: 0;
+  display: flex;
+  height: 40px;
+  justify-content: flex-end;
+  z-index: 999;
+}
+.toggle,.refresh {
+  width: 30px;
+  height: 30px;
+  margin-right: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.refresh{
+  margin-right: 2%;
 }
 /*vjs-fluid 自适video 长宽*/
 .video {
@@ -312,5 +363,12 @@ body {
     /* scanBox变高扫描线运动范围增大 */
     transform: translateY(calc(30vh - 3px));
   }
+}
+.icon {
+  width: 2em;
+  height: 2em;
+  vertical-align: -0.15em;
+  fill: white;
+  overflow: hidden;
 }
 </style>
