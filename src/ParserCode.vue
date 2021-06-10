@@ -104,21 +104,21 @@ export default {
     },
     success: {
       type: Function,
-      default(result) {
-        alert(result);
+      default() {
+        return null
       },
     },
     fail: {
       type: Function,
-      default(err) {
-        alert(err);
+      default() {
+        return null
       },
     },
     // 获取摄像头失败回调
     getVideoFail: {
       type: Function,
-      default(err) {
-        alert(err);
+      default() {
+       return null
       },
     },
   },
@@ -185,7 +185,7 @@ export default {
         .catch((err) => {
           this.showScanBoxCopy = false;
           this.tipShow = false;
-          this.getVideoFail(err);
+          this.getVideoFail(err) || alert('调取用户摄像头失败');
         });
     },
     toggle() {
@@ -196,21 +196,23 @@ export default {
       this.codeReader.reset(); // 重置
       this.codeReader.decodeOnceFromConstraints(
         constraints,
-        "video",
-        (result, err) => {
+        "video"
+      ).then((result, err) => {
+          this.tipShow = true;
           this.tipMsg = "正在尝试识别...";
           if (result) {
             if (result.text) {
-              this.tipShow = true;
-              this.success(result.text);
+              this.success(result.text) || alert(result.text);
+              this.tipMsg = "扫描装备条码";
+              this.decodeOnceFromConstraintsFunc(this.switchPerspective);
             }
           }
-          if (err && !err) {
+          if (err) {
             this.tipMsg = "识别失败";
-            this.fail(err);
+            this.fail(err) || alert(err);
+            setTimeout(()=>{this.tipShow = false},2000)
           }
-        }
-      );
+        });
     },
     // 返回一个promise对象，如果要获取解析后的值可以通过调用then方法来获取
     async parseStaticImg(imgSrc) {
@@ -218,11 +220,11 @@ export default {
       let res = this.codeReader
         .decodeFromImage(undefined, imgSrc)
         .then((result) => {
-          this.success(result.text);
+          this.success(result.text) || alert(result.text);
           return result.text;
         })
         .catch((err) => {
-          this.fail(err);
+          this.fail(err) || alert(err);
         });
       return res;
     },
