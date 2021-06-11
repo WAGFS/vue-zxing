@@ -1,6 +1,6 @@
 {
   "name": "vue-zxing",
-  "main": "src/main.js",
+  "main": "lib/vue-zxing.umd.js",
   "version": "1.0.9",
   "private": false,
   "scripts": {
