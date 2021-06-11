@@ -127,6 +127,7 @@ export default {
       codeReader: null,
       tipMsg: "扫描装备条码",
       tipShow: true,
+      video:null,
       img: null,
       reader: null,
       back: true,
@@ -192,27 +193,37 @@ export default {
       this.back = !this.back;
       this.decodeOnceFromConstraintsFunc(this.switchPerspective);
     },
-    decodeOnceFromConstraintsFunc(constraints) {
-      this.codeReader.reset(); // 重置
-      this.codeReader.decodeOnceFromConstraints(
-        constraints,
-        "video"
-      ).then((result, err) => {
+    async decodeOnceFromConstraintsFunc(constraints) {
+      //this.codeReader.reset(); // 重置
+      // this.codeReader.decodeOnceFromConstraints(
+      //   constraints,
+      //   "video"
+      // )
+      const stream = await navigator.mediaDevices.getUserMedia(constraints);
+      await this.codeReader.reset();
+      this.video = await this.codeReader.attachStreamToVideo(stream, "video");
+      await this.decoding(video)
+    },
+    async decoding(video){
+      let result = this.codeReader.decodeOnce(video)
+      result.then((result) => {
           this.tipShow = true;
           this.tipMsg = "正在尝试识别...";
           if (result) {
             if (result.text) {
               this.success(result.text) || alert(result.text);
               this.tipMsg = "扫描装备条码";
-              this.decodeOnceFromConstraintsFunc(this.switchPerspective);
+              this.decoding(this.video)
             }
           }
-          if (err) {
+          },(err) => {
+            if (err) {
+            if(err.message === 'Video stream has ended before any code could be detected.') return
             this.tipMsg = "识别失败";
             this.fail(err) || alert(err);
             setTimeout(()=>{this.tipShow = false},2000)
           }
-        });
+          });
     },
     // 返回一个promise对象，如果要获取解析后的值可以通过调用then方法来获取
     async parseStaticImg(imgSrc) {
