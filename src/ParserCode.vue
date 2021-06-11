@@ -22,15 +22,7 @@
         :height="videoHeight"
         autoplay
       ></video>
-    </div>
-    <!-- 选择图片 -->
-    <input
-      type="file"
-      id="choose"
-      accept="image/*"
-      v-if="parseType === 'Image' && inputId === 'choose' && showDefaultInput"
-    />
-    <slot>
+      <slot>
       <div
         class="scanBox"
         :style="{ width: scanBoxWidth, height: scanHeight }"
@@ -46,6 +38,15 @@
         <div v-show="tipShow" class="tip">{{ tipMsg }}</div>
       </div>
     </slot>
+    </div>
+    <!-- 选择图片 -->
+    <input
+      type="file"
+      id="choose"
+      accept="image/*"
+      v-if="parseType === 'Image' && inputId === 'choose' && showDefaultInput"
+    />
+   
     <slot name="other"></slot>
   </div>
 </template>
