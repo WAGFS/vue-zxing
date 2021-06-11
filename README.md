@@ -7,7 +7,7 @@
 * **请尽可能的在https域名下调用组件，在http域名下只能是localhost或者是127.0.0.1，其他域名会导致相机唤醒失败。**
 * **请在可调取摄像头的设备上使用组件。**
 * **通过浏览器调用的摄像头清晰度可能并没有您想象的那么高，您可能需要将设备离要扫描的二维码或条形码足够近相机才能正确对焦并识别。**
-* **您可以使用具有摄像头的设备通过访问 [https://wagfs.github.io/Barcode-Dom/](https://wagfs.github.io/Barcode-Dom/)这个地址来查看示例（该示例暂无选择图片识别功能） **
+* **您可以使用具有摄像头的设备通过访问 [https://wagfs.github.io/Barcode-Dom/](https://wagfs.github.io/Barcode-Dom/)这个地址来查看示例（该示例暂无选择图片识别功能） 。**
 
 [zxing-js/library](https://serratus.github.io/zxing-js/library/) 's wrapper for Vue.js
 

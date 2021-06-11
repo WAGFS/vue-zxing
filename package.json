@@ -1,7 +1,7 @@
 {
   "name": "vue-zxing",
   "main": "lib/vue-zxing.umd.js",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
