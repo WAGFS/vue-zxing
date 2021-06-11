@@ -384,8 +384,8 @@ header {
   }
 }
 .icon {
-  width: 2em;
-  height: 2em;
+  width: 3em;
+  height: 3em;
   vertical-align: -0.15em;
   fill: white;
   overflow: hidden;
