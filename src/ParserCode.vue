@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="parser-code">
     <slot name="header">
       <header>
         <div class="refresh" @click="decodeOnceFromConstraintsFunc(switchPerspective)" v-if="showToggleBtnCopy">
@@ -265,9 +265,12 @@ export default {
 body {
   margin: 0;
 }
+.parser-code{
+  position: relative;
+}
 /* 头部 */
 header {
-  position: fixed;
+  position: absolute;
   top: 2%;
   left: 0;
   right: 0;
@@ -307,7 +310,9 @@ header {
 .page {
   width: 100vw;
   height: 100vh;
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 .scanBox {
   position: absolute;
