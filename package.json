@@ -1,16 +1,24 @@
 {
   "name": "vue-zxing",
+  "main": "lib/vue-zxing.umd.js",
   "version": "1.0.7",
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "build:lib": "vue-cli-service build --target lib --name vue-zxing --dest lib  src/index.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/WAGFS/vue-zxingjs"
   },
-  "keywords": ["vue-zxing","zxing/library","barcode","QR code","webcam"],
+  "keywords": [
+    "vue-zxing",
+    "zxing/library",
+    "barcode",
+    "QR code",
+    "webcam"
+  ],
   "author": "coderlc",
   "license": "ISC",
   "bugs": {
