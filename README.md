@@ -1,4 +1,4 @@
-# vue-zxingjs
+# vue-zxing
 
 基于zxing-js/library插件封装的vue组件，组件可以扫描解析二维码、条形码。
 
@@ -9,14 +9,14 @@
 * **通过浏览器调用的摄像头清晰度可能并没有您想象的那么高，您可能需要将设备离要扫描的二维码或条形码足够近相机才能正确对焦并识别。**
 * **您可以使用具有摄像头的设备通过访问 [https://wagfs.github.io/Barcode-Dom/](https://wagfs.github.io/Barcode-Dom/)这个地址来查看示例（该示例暂无选择图片识别功能） 。**
 
-[zxing-js/library](https://serratus.github.io/zxing-js/library/) 's wrapper for Vue.js
+[zxing-js/library](https://github.com/zxing-js/library) 's wrapper for Vue.js
 
 # Installtion
 
 ## npm
 
 ``` bash
-npm i vue-zxingjs
+npm i vue-zxing
 ```
 
 # Basic Example
@@ -30,7 +30,7 @@ npm i vue-zxingjs
 
 <script>
 import Vue from 'vue'
-import VueZxing from 'vue-zxingjs';
+import VueZxing from 'vue-zxing';
 
 Vue.use(VueZxing);
 
