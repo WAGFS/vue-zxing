@@ -16,7 +16,7 @@
 ## npm
 
 ``` bash
-npm i vue-zxingjs
+npm i vue-zxing
 ```
 
 # Basic Example
@@ -30,7 +30,7 @@ npm i vue-zxingjs
 
 <script>
 import Vue from 'vue'
-import VueZxing from 'vue-zxingjs';
+import VueZxing from 'vue-zxing';
 
 Vue.use(VueZxing);
 
