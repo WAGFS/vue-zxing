@@ -203,7 +203,7 @@ export default {
       const stream = await navigator.mediaDevices.getUserMedia(constraints);
       await this.codeReader.reset();
       this.video = await this.codeReader.attachStreamToVideo(stream, "video");
-      await this.decoding(video)
+      await this.decoding(this.video)
     },
     async decoding(video){
       let result = this.codeReader.decodeOnce(video)
@@ -212,7 +212,7 @@ export default {
           this.tipMsg = "正在尝试识别...";
           if (result) {
             if (result.text) {
-              this.success(result.text) || alert(result.text);
+              this.success ? this.success(result.text) : alert(result.text)
               this.tipMsg = "扫描装备条码";
               this.decoding(this.video)
             }
@@ -232,7 +232,7 @@ export default {
       let res = this.codeReader
         .decodeFromImage(undefined, imgSrc)
         .then((result) => {
-          this.success(result.text) || alert(result.text);
+          this.success ? this.success(result.text) : alert(result.text)
           return result.text;
         })
         .catch((err) => {
