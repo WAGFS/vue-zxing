@@ -52,6 +52,7 @@
 </template>
 <script>
 import "./assets/svg/iconfont";
+// BrowserQRCodeReader只读取二维码 速度要比 BrowserMultiFormatReader快
 import { BrowserMultiFormatReader } from "@zxing/library";
 export default {
   name: "parser-code",
@@ -166,6 +167,10 @@ export default {
           this.inputDom.addEventListener("change", this.selectImg(this), false);
       });
     }
+  },
+  beforeDestroy(){
+    // 页面关闭前，结束调用摄像头
+    this.codeReader.reset()
   },
   methods: {
     async openScan() {
